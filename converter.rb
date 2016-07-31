@@ -16,7 +16,8 @@ db.execute <<-SQL
     type VARCHAR(10),
     latin VARCHAR(20),
     english VARCHAR(70),
-    gender VARCHAR(5)
+    gender VARCHAR(5),
+    conjugation int
   );
 SQL
 
@@ -29,9 +30,11 @@ SQL
     latin = e.at_xpath('latin').content
     english = e.at_xpath('english').content
     gender = e.at_xpath('gender')
+    conjugation = e.at_xpath('conjugation')
 
     gender = gender.nil? ? nil : gender.content
+    conjugation = conjugation.nil? ? nil : conjugation.content
 
-    db.execute('INSERT INTO vocabulary (chapter, type, latin, english, gender) VALUES (?, ?, ?, ?, ?)', [chapter, entry_type, latin, english, gender])
+    db.execute('INSERT INTO vocabulary (chapter, type, latin, english, gender, conjugation) VALUES (?, ?, ?, ?, ?, ?)', [chapter, entry_type, latin, english, gender, conjugation])
   end
 end
